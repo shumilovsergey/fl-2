@@ -1,0 +1,32 @@
+pip install virtualenv
+
+virtualenv env
+source env/bin/activate (unix)
+env\Scripts\activate (windows)
+Set-ExecutionPolicy RemoteSigned (if needed)
+
+deactivate
+
+#pip install 
+
+pip install Django
+pip install djangorestframework
+pip install python-dotenv
+pip install django-cors-headers
+pip install requests
+pip install redis
+pip install django-redis redis
+
+
+#install from 
+
+pip install -r requirements.txt
+
+
+#comands
+pip freeze > requirements.txt
+python manage.py startapp 
+python manage.py makemigrations app
+python manage.py migrate
+python manage.py createsuperuser 
+python manage.py runserver 0.0.0.0:80
