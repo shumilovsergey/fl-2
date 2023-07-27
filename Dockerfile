@@ -1,25 +1,31 @@
-# Use an official Python runtime as the base image
+# Base image
 FROM python:3.9
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1 
 
-# Set the working directory in the container
-WORKDIR /code
+# Set working directory
+WORKDIR /app
+
+# Copy requirements file
+COPY requirements.txt .
 
 # Install dependencies
-COPY requirements.txt /code/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Copy the project code into the container
-COPY . /code/
+# Copy application code
+COPY . .
 
-# Create a volume for the database
-VOLUME /code/db
+ARG ENV_FILE
+ENV ENV_FILE=${ENV_FILE}
+RUN if [ "$ENV_FILE" ]; then cp "$ENV_FILE" .env; fi
 
-# Expose the port where the application will run
-EXPOSE 8000
+# Set the port number from the environment variable
+ENV PORT=5002
 
-# Run the Django development server
-CMD python manage.py runserver 0.0.0.0:8000
+EXPOSE 5002
+# Define volume for database
+VOLUME django-bd:/app
+
+# Start server
+CMD python manage.py runserver 0.0.0.0:${PORT}
