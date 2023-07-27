@@ -35,13 +35,13 @@ class Chats(models.Model):
         verbose_name_plural = 'Пользователи'
 
 class Janras(models.Model):
-    janra = models.CharField(
+    name = models.CharField(
         verbose_name="Название жанра", 
         max_length=56, 
     )  
 
     def __str__(self):
-        return self.janra
+        return self.name
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
