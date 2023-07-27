@@ -112,12 +112,15 @@ def rout_add(message):
     message_id = message.message_id
 
     if auth(chat_id):
+        if Janras.objects.count() > 0:
+            text = "Какой жанр истории хотите загрузить?"
+            group_number = "1"
+            keyboard = keyboard_add(group_number)
+            message_send(chat_id=chat_id, keyboard=keyboard, text=text)
         
-        #ПРОВЕРИТЬ, ЕСТЬ ЛИ ЖАНРЫ?
-        
-        text = "Какой жанр истории хотите загрузить?"
-        group_number = "1"
-        keyboard = keyboard_add(group_number)
+        else:
+            text = "Жанры историй еще не добавлены"
+            bot.send_message(chat_id, text)
 
     bot.delete_message(chat_id, message_id)
     return
@@ -227,13 +230,39 @@ def auth(chat_id):
 
 def keyboard_add(group_number):
     group_number = int(group_number)
-    all_janras = ""
-    count_janras = ""
-    amount = all_janras - ( 6*group_number )
-    if amount <= 0:
-        pass #last group
-    else:
-        pass #not last group
+    all_elements = Janras.objects.all()
+    element_count = int(len(all_elements))
+    first_element_number = (6*(group_number - 1)) + 1
+    amount = element_count - ( 6*group_number )
+    count = 1
+    array = []
+
+
+    if amount <= 0:#last group
+        for element in all_elements:
+            if count >= first_element_number:
+                janra = element
+                janra_id = janra.id
+                janra_name = janra.name
+                array_element = [{'text': janra_name, 'callback_data': f'menu_add/{janra_id}'}]
+                array.append(array_element)
+            count =+ 1        
+        
+    else:#not last group
+        for element in all_elements:
+            last_element_counter = 7
+            if count >= first_element_number:
+                if count < last_element_counter:
+                    janra = element
+                    janra_id = janra.id
+                    janra_name = janra.name
+                    array_element = [{'text': janra_name, 'callback_data': f'menu_add/{janra_id}'}]
+                    array.append(array_element)
+            count =+ 1
+
+    keyboard = {
+        "inline_keyboard" :  array
+    }   
     return keyboard
 
 
