@@ -1,8 +1,10 @@
+
 # Base image
 FROM python:3.9
 
 # Set environment variables
-ENV PYTHONUNBUFFERED=1 
+ENV PYTHONUNBUFFERED=1
+
 
 # Set working directory
 WORKDIR /app
@@ -25,7 +27,7 @@ ENV PORT=5002
 
 EXPOSE 5002
 # Define volume for database
-VOLUME django-bd:/app
+VOLUME bd:/app
 
 # Start server
 CMD python manage.py runserver 0.0.0.0:${PORT}

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    volumes:
+      - django_volume:/app
+
+volumes:
+  django_volume:

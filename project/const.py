@@ -5,5 +5,5 @@ load_dotenv()
 
 
 DOMAIN_NAME = os.getenv("DOMAIN_NAME")
-TOKEN_SH_DEV_BOT = os.getenv("TOKEN_SH_DEV_BOT")
-FREELANCE_GROUP_ID = os.getenv("FREELANCE_GROUP_ID")
+TOKEN_SH_DEV_BOT = "none"
+FREELANCE_GROUP_ID = "none"
